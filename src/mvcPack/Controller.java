@@ -5,9 +5,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 
-public class Controller implements ActionListener, KeyListener {
+public class Controller implements ActionListener, KeyListener, MouseListener {
 
 	private Model myModel;
 	private View myView;
@@ -16,29 +18,42 @@ public class Controller implements ActionListener, KeyListener {
 	
 	public Controller() {}
 	
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("e.class: " + e.getClass());
-		System.out.println("Action: " + e.getActionCommand());
-		System.out.println("Counter: " + myModel.getNumber());
-		
 		myModel.incNumber();
+		System.out.println("Counter: " + myModel.getNumber());
 	}
 	
 	@Override
-	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
-	}
-
+	public void keyPressed(KeyEvent e) {}
 	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-	}
-
+	public void keyReleased(KeyEvent e) {}
 	@Override
 	public void keyTyped(KeyEvent e) {
-		System.out.println("keyTyped : " + e.getKeyChar());
+		System.out.println("keyTyped: " + e.getKeyChar());
 	}
+	
+	@Override
+	public void mouseClicked(MouseEvent e) {}
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		if(e.getSource().getClass() == Button.class) {
+			System.out.println("Entered: " + ((Button) e.getSource()).getLabel());
+			e.getComponent().requestFocusInWindow();
+		}
+	}
+	@Override
+	public void mouseExited(MouseEvent e) {
+		if(e.getSource().getClass() == Button.class) {
+			System.out.println("Exited: " + ((Button) e.getSource()).getLabel());
+			e.getComponent().transferFocusUpCycle();
+		}
+	}
+	@Override
+	public void mousePressed(MouseEvent e) {}
+	@Override
+	public void mouseReleased(MouseEvent e) {}
 	
 	
 	public void addModel(Model m) {
@@ -64,7 +79,10 @@ public class Controller implements ActionListener, KeyListener {
 		newController.addView(newView);
 		newController.initModel(start_value);
 		
-		newView.addController(newController, newController);
+		newView.addController(newController);
 	}
+
+
+	
 	
 }
