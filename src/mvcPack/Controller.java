@@ -55,7 +55,6 @@ public class Controller implements ActionListener, KeyListener, MouseListener {
 	@Override
 	public void mouseReleased(MouseEvent e) {}
 	
-	
 	public void addModel(Model m) {
 		myModel = m;
 	}
@@ -81,7 +80,6 @@ public class Controller implements ActionListener, KeyListener, MouseListener {
 		
 		newView.addController(newController);
 	}
-
 
 	
 	

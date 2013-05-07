@@ -1,6 +1,7 @@
 package mvcPack;
 
 import java.awt.Button;
+import java.awt.Color;
 import java.awt.Frame;
 import java.awt.Label;
 import java.awt.Panel;
@@ -20,14 +21,16 @@ public class View implements Observer {
 	private Panel panel;
 	private Button button;
 	private Button button2;
+	private TextField text;
 	
 	public View() {
 		frame = new Frame("simple MVC");
 		frame.add("North", new Label("counter"));
-
-
-		//panel in constructor and not an attribute as doesn't need to be visible to whole class
+		
 		panel = new Panel();
+		panel.setBackground(Color.gray);
+		text = new TextField("Default");
+		panel.add(text);
 		button = new Button("PressMe");
 		panel.add(button);
 		button2 = new Button("PressMeToo");
@@ -35,17 +38,15 @@ public class View implements Observer {
 		frame.add("South", panel);
 
 		frame.addWindowListener(new CloseListener());
-		frame.setSize(400,400);
+		frame.setSize(400,200);
 		frame.setLocation(100,100);
 		frame.setVisible(true);
-		frame.setFocusable(true);
-		
+		frame.requestFocusInWindow();
 	}
 	
 	@Override
 	public void update(Observable obs, Object obj) {
-		// TODO Auto-generated method stub
-		
+		text.setText(obj.toString());
 	}
 	
 	public void addController(EventListener controller) {
@@ -56,7 +57,7 @@ public class View implements Observer {
 		button2.addActionListener((ActionListener) controller);
 	}
 	
-	/* Figure out the properties of WindowAdapter, and why this class is here */
+	
 	public static class CloseListener extends WindowAdapter {
 		public void windowClosing(WindowEvent e) {
 			e.getWindow().setVisible(false);
